@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import alanBtn from "@alan-ai/alan-sdk-web";
 
 import NewsCards from "./components/NewsCards/NewsCards";
+import useStyles from "./styles";
 
 const alanKey =
   "5a6d14a9e8da336b1c0577d766c61b0e2e956eca572e1d8b807a3e2338fdd0dc/stage";
 
 const App = () => {
   const [newsArticles, setNewsArticles] = useState([]);
+  const classes = useStyles();
 
   useEffect(() => {
     // will only run once on initialisation
@@ -24,7 +26,14 @@ const App = () => {
 
   return (
     <div>
-      <h1>Alan AI News Application</h1>
+      <div className={classes.logoContainer}>
+        {/* TODO Remove this image and add text to say click button */}
+        <img
+          src="https://alan.app/brand_assets/logo-horizontal/color/alan-logo-horizontal-color.svg"
+          className={classes.alanLogo}
+          alt="alan-logo"
+        />
+      </div>
       <NewsCards articles={newsArticles} />
     </div>
   );
