@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import alanBtn from "@alan-ai/alan-sdk-web";
 
 const alanKey =
@@ -9,9 +9,9 @@ const App = () => {
     // will only run once on initialisation
     alanBtn({
       key: alanKey,
-      onCommand: ({ command }) => {
-        if (command === "testCommand") {
-          alert("This code was executed");
+      onCommand: ({ command, articles }) => {
+        if (command === "newHeadlines") {
+          console.log(articles);
         }
       },
     });
