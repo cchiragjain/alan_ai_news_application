@@ -138,3 +138,17 @@ intent('go back',(p) => {
     p.play('Sure, going back');
     p.play({command:'newHeadlines',articles:[]});
 })
+
+// taken from https://alan.app/docs/server-api/popups/
+onUserEvent((p, e) => {
+    console.info('EVENT', e.event);
+    if (e.event == 'buttonReady') {
+        p.showPopup({
+            html: '<div class="info-popup"> <div class="info-popup_header"></div><div class="info-popup_body"> <div>Ask questions and perform other tasks with voice</div><div class="info-popup_pointer-button"> <div class="info-popup_pointer-button_bg"> <div class="info-popup_pointer-button_arrow"></div></div><div class="info-popup_pointer-button_text">Click here to speak!</div></div></div></div>',
+            style: ".info-popup{max-width:394px;height:324px;max-height:324px;background:#fff;-webkit-box-shadow:0 5px 14px rgba(0,0,0,.25);box-shadow:0 5px 14px rgba(0,0,0,.25);overflow:hidden;border-radius:10px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.top .info-popup{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.top .info-popup_body{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;padding-top:20px}.info-popup_header{height:191px;background-image:url(https://alan.app/assets/script-concepts/popup-image.png);background-repeat:no-repeat;background-position:center center;background-size:100% 100%}.info-popup_body{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;font-weight:400;font-size:16px;line-height:28px;text-align:center;color:#000;padding:6px 70px 0;height:133px}.info-popup_pointer-button{width:170px;height:36px;margin:7px auto 10px;position:relative}.right .info-popup_pointer-button{padding-right:16px}.left .info-popup_pointer-button{padding-left:16px}.info-popup_pointer-button_text{position:absolute;height:100%;width:100%;font-size:16px;line-height:36px;text-align:center;color:#fff}.info-popup_pointer-button_bg{position:absolute;height:100%;width:100%;background:#0D75FF;border-radius:7px}.info-popup_pointer-button_arrow{position:absolute;background-color:#0D75FF;text-align:left;top:3px;right:-10px;transform:rotate(-90deg) skewX(-30deg) scale(1,.866)}.info-popup_pointer-button_arrow:after,.info-popup_pointer-button_arrow:before{content:'';position:absolute;background-color:inherit}.info-popup_pointer-button_arrow,.info-popup_pointer-button_arrow:after,.info-popup_pointer-button_arrow:before{width:20px;height:20px;border-top-right-radius:30%}.info-popup_pointer-button_arrow:before{transform:rotate(-135deg) skewX(-45deg) scale(1.414,.707) translate(0,-50%)}.info-popup_pointer-button_arrow:after{transform:rotate(135deg) skewY(-45deg) scale(.707,1.414) translate(50%)}.left .info-popup_pointer-button_bg{-webkit-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}",
+            overlay: true,
+            buttonMarginInPopup: 15,
+            force: false,
+        });
+    }
+});

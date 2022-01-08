@@ -46,13 +46,15 @@ const App = () => {
 
   return (
     <div>
-      <div className={classes.logoContainer}>
-        <img
-          src="https://alan.app/brand_assets/logo-horizontal/color/alan-logo-horizontal-color.svg"
-          className={classes.alanLogo}
-          alt="alan-logo"
-        />
-      </div>
+      {newsArticles.length === 0 && (
+        <div className={classes.logoContainer}>
+          <img
+            src="https://i0.wp.com/synqqblog.wpcomstaging.com/wp-content/uploads/2019/11/preview.jpg?fit=1200%2C630&ssl=1"
+            className={classes.alanLogo}
+            alt="alan-logo"
+          />
+        </div>
+      )}
       <NewsCards articles={newsArticles} activeArticle={activeArticle} />
     </div>
   );
