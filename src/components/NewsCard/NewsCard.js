@@ -7,6 +7,7 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
+import classNames from "classnames";
 
 import useStyles from "./styles";
 
@@ -15,11 +16,18 @@ import useStyles from "./styles";
 const NewsCard = ({
   article: { description, publishedAt, source, title, url, urlToImage },
   idx,
+  activeArticle,
 }) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
+    /* classNames will set class to be classes.card and if activeArticle === idx then make it active as well or else will be classes.card only */
+    <Card
+      className={classNames(
+        classes.card,
+        activeArticle === idx ? classes.activeCard : null
+      )}
+    >
       <CardActionArea href={url} target="_blank">
         <CardMedia
           className={classes.media}

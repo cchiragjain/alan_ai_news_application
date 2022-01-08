@@ -26,7 +26,7 @@ const infoCards = [
   },
 ];
 
-const NewsCards = ({ articles }) => {
+const NewsCards = ({ articles, activeArticle }) => {
   const classes = useStyles();
 
   // on initial load there will be no articles
@@ -86,7 +86,11 @@ const NewsCards = ({ articles }) => {
       >
         {articles.map((article, idx) => (
           <Grid item xs={12} sm={6} md={4} lg={3} className={classes.article}>
-            <NewsCard article={article} idx={idx} />
+            <NewsCard
+              article={article}
+              activeArticle={activeArticle}
+              idx={idx}
+            />
           </Grid>
         ))}
       </Grid>

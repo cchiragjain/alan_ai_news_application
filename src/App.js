@@ -9,6 +9,8 @@ const alanKey =
 
 const App = () => {
   const [newsArticles, setNewsArticles] = useState([]);
+  // -1 works for some reason 0 reads the previous one
+  const [activeArticle, setActiveArticle] = useState(-1);
   const classes = useStyles();
 
   useEffect(() => {
@@ -19,6 +21,10 @@ const App = () => {
         if (command === "newHeadlines") {
           // console.log(articles);
           setNewsArticles(articles);
+          // when search again need to reset back to original
+          setActiveArticle(-1);
+        } else if (command === "highlight") {
+          setActiveArticle((prevActiveArticle) => prevActiveArticle + 1);
         }
       },
     });
@@ -34,7 +40,7 @@ const App = () => {
           alt="alan-logo"
         />
       </div>
-      <NewsCards articles={newsArticles} />
+      <NewsCards articles={newsArticles} activeArticle={activeArticle} />
     </div>
   );
 };

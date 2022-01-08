@@ -1,5 +1,5 @@
 intent('What does this app do?','What can I do here?',
-      reply('This is a news project.'));
+      reply('This is a conversational voice controlled news app'));
 
 const API_KEY = '7bb4ffa98a7a43359ad3015bacc6b0a2';
 let savedArticles = [];
@@ -24,6 +24,9 @@ intent('Give me the news from $(source* (.*))', (p) => {
         
         p.play({ command: 'newHeadlines', articles });
         p.play(`Here are the (latest|recent) news from ${p.source.value}.`);
+        
+        p.play('Would you like me to read the headlines?');
+        p.then(confirmation);
     });
 })
 
@@ -47,6 +50,9 @@ intent('what\'s up with $(term* (.*))', (p) => {
         
         p.play({ command: 'newHeadlines', articles });
         p.play(`Here are the (latest|recent) articles on ${p.term.value}`);
+        
+        p.play('Would you like me to read the headlines?');
+        p.then(confirmation);
     });
 })
 
@@ -76,6 +82,8 @@ intent(`(show|what is|tell me|what's|what are|what're|read) (the|) (recent|lates
         p.play({ command: 'newHeadlines', articles });
         p.play(`Here are the (latest|recent) articles on ${p.C.value}`);
         
+        p.play('Would you like me to read the headlines?');
+        p.then(confirmation);
     });
 })
 
@@ -98,5 +106,21 @@ intent(`(show|what is|tell me|what's|what are|what're|read) (the|) (recent|lates
         p.play({ command: 'newHeadlines', articles });
         p.play(`Here are the (latest|recent) headlines`);
         
+        p.play('Would you like me to read the headlines?');
+        p.then(confirmation);
+        
     });
+})
+
+const confirmation = context(() => {
+    intent('yes',async(p) => {
+        for(let i = 0; i < savedArticles.length;i++){
+            p.play({command:'highlight', articles: savedArticles[i]});
+            p.play(`${savedArticles[i].title}`);
+        }
+    })
+    
+    intent('no',(p) => {
+        p.play('Sure, sounds good to me.')
+    })
 })
