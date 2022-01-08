@@ -47,7 +47,6 @@ const App = () => {
   return (
     <div>
       <div className={classes.logoContainer}>
-        {/* TODO Remove this image and add text to say click button or add alan popup and remove it completely*/}
         <img
           src="https://alan.app/brand_assets/logo-horizontal/color/alan-logo-horizontal-color.svg"
           className={classes.alanLogo}
