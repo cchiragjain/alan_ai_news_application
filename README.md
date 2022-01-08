@@ -4,13 +4,17 @@
 - Users can navigate the entire web-app using only voice commands.
 - Built using **ReactJS** for frontend, **NewsAPI** to fetch the news and **Alan AI** for voice commands.
 
-[Live Version](https://alannewsreader.netlify.app/)
+- [Live Version](https://alannewsreader.netlify.app/)
 
 <!-- Add demo video here using github drag and drop -->
+## Demo
+
+https://user-images.githubusercontent.com/59828850/148657895-2e28ade3-61e6-4301-a1f0-a9e7032747ad.mp4
 
 ## Running the app locally
 
-The project contains all the api keys as it is to run locally download/clone the repo and run
+- The project contains all the api keys as it is
+- To run locally download/clone the repo and run
 `npm install`
 & then
 `npm start`
