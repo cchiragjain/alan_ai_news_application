@@ -56,6 +56,31 @@ intent('what\'s up with $(term* (.*))', (p) => {
     });
 })
 
+// latest news
+intent(`(show|what is|tell me|what's|what are|what're|read) (the|) (recent|latest|) $(N news|headlines)`,
+       `(read|show|get|bring me|give me) (the|) (recent|latest) $(N news|headlines)`, (p) => {
+    
+    let NEWS_API_URL = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&country=in`;
+    
+    api.request(NEWS_API_URL, (error, response, body) => {
+        const { articles } = JSON.parse(body);
+        
+        if(!articles.length) {
+            p.play('Sorry could not find any news right now');
+            return;
+        }
+        
+        savedArticles = articles;
+        
+        p.play({ command: 'newHeadlines', articles });
+        p.play(`Here are the (latest|recent) headlines`);
+        
+        p.play('Would you like me to read the headlines?');
+        p.then(confirmation);
+        
+    });
+})
+
 // News by Categories
 const CATEGORIES = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
 const CATEGORIES_INTENT = `${CATEGORIES.map((category) => `${category}~${category}`).join('|')}`;
@@ -87,31 +112,7 @@ intent(`(show|what is|tell me|what's|what are|what're|read) (the|) (recent|lates
     });
 })
 
-// latest news
-intent(`(show|what is|tell me|what's|what are|what're|read) (the|) (recent|latest|) $(N news|headlines)`,
-       `(read|show|get|bring me|give me) (the|) (recent|latest) $(N news|headlines)`, (p) => {
-    
-    let NEWS_API_URL = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&country=in`;
-    
-    api.request(NEWS_API_URL, (error, response, body) => {
-        const { articles } = JSON.parse(body);
-        
-        if(!articles.length) {
-            p.play('Sorry could not find any news right now');
-            return;
-        }
-        
-        savedArticles = articles;
-        
-        p.play({ command: 'newHeadlines', articles });
-        p.play(`Here are the (latest|recent) headlines`);
-        
-        p.play('Would you like me to read the headlines?');
-        p.then(confirmation);
-        
-    });
-})
-
+// confirmation to read the headlines
 const confirmation = context(() => {
     intent('yes',async(p) => {
         for(let i = 0; i < savedArticles.length;i++){
@@ -123,4 +124,17 @@ const confirmation = context(() => {
     intent('no',(p) => {
         p.play('Sure, sounds good to me.')
     })
+})
+
+// open article number
+intent('open (the|) (article|) (number|) $(number* (.*))', (p) => {
+    if(p.number.value) {
+        p.play({ command:'open', number: p.number.value, articles: savedArticles});
+    }
+})
+
+// go back
+intent('go back',(p) => {
+    p.play('Sure, going back');
+    p.play({command:'newHeadlines',articles:[]});
 })

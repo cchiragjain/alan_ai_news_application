@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import alanBtn from "@alan-ai/alan-sdk-web";
+import wordsToNumbers from "words-to-numbers";
 
 import NewsCards from "./components/NewsCards/NewsCards";
 import useStyles from "./styles";
@@ -15,16 +16,29 @@ const App = () => {
 
   useEffect(() => {
     // will only run once on initialisation
-    alanBtn({
+    const alanBtnInstance = alanBtn({
       key: alanKey,
-      onCommand: ({ command, articles }) => {
+      onCommand: ({ command, articles, number }) => {
         if (command === "newHeadlines") {
-          // console.log(articles);
           setNewsArticles(articles);
           // when search again need to reset back to original
           setActiveArticle(-1);
         } else if (command === "highlight") {
           setActiveArticle((prevActiveArticle) => prevActiveArticle + 1);
+        } else if (command === "open") {
+          const parsedNumber =
+            number.length > 2
+              ? wordsToNumbers(number, { fuzzy: true })
+              : number;
+
+          const article = articles[parsedNumber - 1];
+          if (parsedNumber > articles.length) {
+            // console.log(parsedNumber,);
+            alanBtnInstance.playText("Sorry that article does not exist...");
+          } else if (article) {
+            window.open(article.url, "_blank");
+            alanBtnInstance.playText("Opening...");
+          }
         }
       },
     });
@@ -33,7 +47,7 @@ const App = () => {
   return (
     <div>
       <div className={classes.logoContainer}>
-        {/* TODO Remove this image and add text to say click button */}
+        {/* TODO Remove this image and add text to say click button or add alan popup and remove it completely*/}
         <img
           src="https://alan.app/brand_assets/logo-horizontal/color/alan-logo-horizontal-color.svg"
           className={classes.alanLogo}
