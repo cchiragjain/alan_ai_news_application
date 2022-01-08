@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import alanBtn from "@alan-ai/alan-sdk-web";
 import wordsToNumbers from "words-to-numbers";
+import bot from "./bot.jpg";
 
 import NewsCards from "./components/NewsCards/NewsCards";
 import useStyles from "./styles";
@@ -48,11 +49,7 @@ const App = () => {
     <div>
       {newsArticles.length === 0 && (
         <div className={classes.logoContainer}>
-          <img
-            src="https://i0.wp.com/synqqblog.wpcomstaging.com/wp-content/uploads/2019/11/preview.jpg?fit=1200%2C630&ssl=1"
-            className={classes.alanLogo}
-            alt="alan-logo"
-          />
+          <img src={bot} className={classes.alanLogo} alt="alan-logo" />
         </div>
       )}
       <NewsCards articles={newsArticles} activeArticle={activeArticle} />
