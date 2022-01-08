@@ -1,3 +1,4 @@
+import { useState, useEffect, createRef } from "react";
 import {
   Card,
   CardActions,
@@ -20,9 +21,27 @@ const NewsCard = ({
 }) => {
   const classes = useStyles();
 
+  // SCROLLING FUNCTIONALITY
+  // found on SO somehow works!!
+  const [elRefs, setElRefs] = useState([]);
+  const scrollToRef = (ref) => window.scroll(0, ref.current.offsetTop - 50);
+  useEffect(() => {
+    setElRefs((refs) =>
+      Array(20)
+        .fill()
+        .map((_, j) => refs[j] || createRef())
+    );
+  }, []);
+  useEffect(() => {
+    if (idx === activeArticle && elRefs[activeArticle]) {
+      scrollToRef(elRefs[activeArticle]);
+    }
+  }, [idx, activeArticle, elRefs]);
+
   return (
     /* classNames will set class to be classes.card and if activeArticle === idx then make it active as well or else will be classes.card only */
     <Card
+      ref={elRefs[idx]}
       className={classNames(
         classes.card,
         activeArticle === idx ? classes.activeCard : null
